@@ -1,0 +1,26 @@
+Camera setting by LaV (pitch provided externally)
+
+given: LaV - vector from camera position to a point to be in the center of the
+screen. It is expected to be normalized.
+
+LaV = (x y z) , x^2 + y^2 + z^2 = 1
+
+Therefore:
+
+  - since the yaw transformation is the last one to be performed, its value is
+     not influenced by other transformations. therefore the yaw angle can be
+     directly determined from the LaV.
+     
+        yaw = acos[ norm{(x 0 z)} * (0 0 1) ]
+        
+  - by zeroing the x component a vector in the YZ plane is generated. This new
+     vector however is no longer normalized and the pitch angle is falsified.
+     By correcting the z component such that the vector is normalized again,
+     the original pitch value can be recovered.
+     
+        z' = sqrt( 1 - y^2 )
+        
+        pitch = acos[ (0 y z') * (0 0 1) ]
+        
+  - the roll component is provided exernally and can directly be converted into
+     a rotation matrix.
