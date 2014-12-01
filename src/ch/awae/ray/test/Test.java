@@ -33,72 +33,104 @@ import ch.awae.ray.World;
 import ch.awae.ray.lights.DistantLight;
 import ch.awae.ray.rendering.BasicRenderer;
 import ch.awae.ray.shapes.Plane;
+import ch.awae.ray.shapes.Polygon;
 import ch.awae.ray.shapes.Sphere;
 
 public class Test {
 
-    public final static int AA_COUNT = 2;
+	public final static int AA_COUNT = 4;
 
-    public static void main(String[] args) {
+	public static void main(String[] args) {
 
-        Material mat0 = new Material(new Color(0.05f, 0.05f, 0.05f), Color.RED,
-                Color.BLACK, Color.WHITE, Color.BLACK, 1.3f, 50);
-        Material mat1 = new Material(new Color(0.05f, 0.05f, 0.05f),
-                Color.GREEN, Color.BLACK, Color.WHITE, Color.BLACK, 1.3f, 50);
-        Material mat2 = new Material(new Color(0.05f, 0.05f, 0.05f),
-                Color.BLUE, Color.BLACK, Color.WHITE, Color.BLACK, 1.3f, 50);
+		Material mat0 = new Material(new Color(0.05f, 0.05f, 0.05f), Color.RED,
+				Color.BLACK, Color.WHITE, Color.BLACK, 1.3f, 50);
+		Material mat1 = new Material(new Color(0.05f, 0.05f, 0.05f),
+				Color.GREEN, Color.BLACK, Color.WHITE, Color.BLACK, 1.3f, 50);
+		Material mat2 = new Material(new Color(0.05f, 0.05f, 0.05f),
+				Color.BLUE, Color.BLACK, Color.WHITE, Color.BLACK, 1.3f, 50);
 
-        Sphere s0 = new Sphere(new Vector3d(0, 0, 5), 2, mat0);
-        // shadow test: (3.5|1|4) with light (-1|0|0)
-        Sphere s1 = new Sphere(new Vector3d(0, 1, -1), 0.5f, mat1);
-        Sphere s2 = new Sphere(new Vector3d(2, 0, 10), 0.5f, mat2);
-        Plane p0 = new Plane(new Vector3d(0, 4, 0), new Vector3d(0, -1, 0),
-                new Material(new Color(0.05f, 0.05f, 0.05f),
-                Color.BLUE, Color.BLACK, new Color(.4f, .4f, .4f), Color.BLACK, 1.3f, 50));
-        Plane p1 = new Plane(new Vector3d(0, 0, 20), new Vector3d(0, 0, -1),
-                new Material(Color.BLACK, Color.BLACK, Color.BLACK,
-                        Color.WHITE, Color.BLACK, 1, 60));
+		Sphere s0 = new Sphere(new Vector3d(0, 0, 5), 2, mat0);
+		// shadow test: (3.5|1|4) with light (-1|0|0)
+		Sphere s1 = new Sphere(new Vector3d(0, 1, -1.4), 0.5f, mat1);
+		Sphere s2 = new Sphere(new Vector3d(5, 0, 10), 0.5f, mat2);
+		Plane p0 = new Plane(new Vector3d(0, 4, 0), new Vector3d(0, -1, 0),
+				new Material(new Color(0.05f, 0.05f, 0.05f), Color.BLUE,
+						Color.BLACK, new Color(.4f, .4f, .4f), Color.BLACK,
+						1.3f, 50));
+		Plane p1 = new Plane(new Vector3d(0, 0, 20), new Vector3d(0, 0, -1),
+				new Material(Color.BLACK, Color.BLACK, Color.BLACK,
+						Color.WHITE, Color.BLACK, 1, 60));
 
-        DistantLight l0 = new DistantLight(new Vector3d(0, 1, 5), Color.GRAY,
-                Color.WHITE, Color.WHITE);
-        DistantLight l1 = new DistantLight(new Vector3d(0, 1, 0), Color.GRAY,
-                new Color(0f, 0f, 0.2f), new Color(0.5f, 0.5f, 0.5f));
+		Polygon g1 = new Polygon(new Material(Color.BLACK, Color.BLACK,
+				Color.BLACK, Color.WHITE, Color.BLACK, 1, 60), new Vector3d(1,
+				0, 0), new Vector3d(-2.3, 2, 1), new Vector3d(-2.3, -2, 1),
+				new Vector3d(-2.3, -2, 5), new Vector3d(-2.3, 2, 5));
+		Material border = new Material(new Color(160 / 255f, 80 / 255f,
+				40 / 255f), new Color(160 / 255f, 80 / 255f, 40 / 255f),
+				Color.BLACK, Color.BLACK, Color.BLACK, 1, 30);
+		Polygon b1 = new Polygon(border, new Vector3d(1, 0, 0), new Vector3d(
+				-2.3, 2, 1), new Vector3d(-2.3, 2.1, .9), new Vector3d(-2.3,
+				-2.1, .9), new Vector3d(-2.3, -2, 1));
+		Polygon b2 = new Polygon(border, new Vector3d(1, 0, 0),
+        		new Vector3d(-2.3, 2, 1),
+        		new Vector3d(-2.3, 2.1, .9),
+        		new Vector3d(-2.3, 2.1, 5.1),
+        		new Vector3d(-2.3, 2, 5));
+		Polygon b3 = new Polygon(border, new Vector3d(1, 0, 0),
+        		new Vector3d(-2.3, 2, 5),
+        		new Vector3d(-2.3, 2.1, 5.1),
+        		new Vector3d(-2.3, -2.1, 5.1),
+        		new Vector3d(-2.3, -2, 5));
+		Polygon b4 = new Polygon(border, new Vector3d(1, 0, 0),
+        		new Vector3d(-2.3, -2, 1),
+        		new Vector3d(-2.3, -2.1, .9),
+        		new Vector3d(-2.3, -2.1, 5.1),
+        		new Vector3d(-2.3, -2, 5));
 
-        World w = new World();
-        w.addBody(s0);
-        w.addBody(s1);
-        w.addBody(p0);
-        w.addBody(s2);
-        w.addBody(p1);
-        w.addLight(l0);
-        w.addLight(l1);
+		DistantLight l0 = new DistantLight(new Vector3d(0, 1, 5), Color.GRAY,
+				Color.WHITE, Color.WHITE);
+		DistantLight l1 = new DistantLight(new Vector3d(0, 1, 0), Color.GRAY,
+				new Color(0f, 0f, 0.2f), new Color(0.5f, 0.5f, 0.5f));
 
-        RayTraveller tr = new RayTraveller(w, new BasicRenderer());
+		World w = new World();
+		w.addBody(s0);
+		w.addBody(s1);
+		w.addBody(p0);
+		w.addBody(s2);
+		w.addBody(p1);
+		w.addLight(l0);
+		w.addLight(l1);
+		w.addBody(g1);
+		w.addBody(b1);
+		w.addBody(b2);
+		w.addBody(b3);
+		w.addBody(b4);
 
-        Camera c = new Camera(new Vector3d(5, 0, -10), (float) (Math.PI / 6),
-                -0.4f, 0, 0);
+		RayTraveller tr = new RayTraveller(w, new BasicRenderer());
 
-        c.setLookAtVector(new Vector3d(0, 0, 5));
+		Camera c = new Camera(new Vector3d(0.4, 0, -5), 1, 0, 0, 0);
 
-        ImageBuilder builder = new ImageBuilder(c, 800, 600, tr);
+		// c.setLookAtVector(new Vector3d(0, 0, 0));
 
-        builder.setMultiSamlingAmount(Test.AA_COUNT);
+		ImageBuilder builder = new ImageBuilder(c, 800, 600, tr);
 
-        long startTime = System.currentTimeMillis();
+		builder.setMultiSamlingAmount(Test.AA_COUNT);
 
-        builder.buildImage(0);
+		long startTime = System.currentTimeMillis();
 
-        long endTime = System.currentTimeMillis();
+		builder.buildImage(0);
 
-        System.out.println("Finished Image Rendering after "
-                + ((endTime - startTime) / 1000f) + " seconds");
+		long endTime = System.currentTimeMillis();
 
-        JFrame f = new JFrame("RayTracer (Anti-Alias: "
-                + (Test.AA_COUNT * Test.AA_COUNT) + "x)");
-        f.setLayout(new BoxLayout(f.getContentPane(), 0));
-        f.add(new JLabel(new ImageIcon(builder.getImage())));
-        f.pack();
-        f.setVisible(true);
-        f.repaint();
-    }
+		System.out.println("Finished Image Rendering after "
+				+ ((endTime - startTime) / 1000f) + " seconds");
+
+		JFrame f = new JFrame("RayTracer (Anti-Alias: "
+				+ (Test.AA_COUNT * Test.AA_COUNT) + "x)");
+		f.setLayout(new BoxLayout(f.getContentPane(), 0));
+		f.add(new JLabel(new ImageIcon(builder.getImage())));
+		f.pack();
+		f.setVisible(true);
+		f.repaint();
+	}
 }
