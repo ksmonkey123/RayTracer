@@ -38,7 +38,7 @@ import ch.awae.ray.shapes.Sphere;
 
 public class Test {
 
-	public final static int AA_COUNT = 4;
+	public final static int AA_COUNT = 10;
 
 	public static void main(String[] args) {
 
@@ -95,9 +95,9 @@ public class Test {
 		World w = new World();
 		w.addBody(s0);
 		w.addBody(s1);
-		w.addBody(p0);
+		//w.addBody(p0);
 		w.addBody(s2);
-		w.addBody(p1);
+		//w.addBody(p1);
 		w.addLight(l0);
 		w.addLight(l1);
 		w.addBody(g1);
